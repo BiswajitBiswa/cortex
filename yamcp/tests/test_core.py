@@ -1,7 +1,7 @@
 # yamcp/tests/test_core.py
 import pytest
 from yamcp.core.app import CoreApp
-from yamcp.plugins.examples.simple_tool import say_hello
+from yamcp.examples.simple_tool import say_hello
 
 @pytest.mark.asyncio
 async def test_hello():

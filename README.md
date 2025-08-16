@@ -54,7 +54,7 @@ cd cortex
 
 # Go to a module (e.g., yamcp)
 cd yamcp
-python3 -m logics.main
+python3 -m yamcp.main
 
 ```
 

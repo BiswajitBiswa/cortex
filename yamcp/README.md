@@ -176,7 +176,7 @@ runner.run()
 
 1. plugins/examples/simple_tool.py
 ```bash
-from logics.core.decorators import tool
+from yamcp.core.decorators import tool
 
 
 @tool("say_hello")
@@ -187,7 +187,7 @@ def say_hello(name: str):
 
 2. plugins/examples/class_tool.py
 ```bash
-from logics.core.decorators import ToolBase
+from yamcp.core.decorators import ToolBase
 
 
 class ReverseText(ToolBase):

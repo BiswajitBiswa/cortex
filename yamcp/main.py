@@ -1,5 +1,7 @@
 import argparse
 import os
+import sys
+
 import uvicorn
 
 from yamcp.config import config
@@ -7,8 +9,8 @@ from yamcp.core.app import CoreApp
 from yamcp.plugins.loader import register_plugins
 
 from yamcp.http_ws_server import HTTPWSServer
-from yamcp.cli_server import CLIServer
 from yamcp.embed_server import EmbedServer
+from yamcp.cli_server import CLIServer
 
 
 class MainRunner:
@@ -29,21 +31,27 @@ class MainRunner:
         # os.environ["YAMCP_PORT"] = str(self.port)
 
         # Create CoreApp and register plugins ONCE here
-        self.core_app = CoreApp()
-        register_plugins(self.core_app, self.plugin_paths)
+        # self.core_app = CoreApp()
+        # register_plugins(self.core_app.tools, self.plugin_paths)
 
     @staticmethod
     def parse_args():
         parser = argparse.ArgumentParser(description="Run YAMCP in different modes.")
-        parser.add_argument("--mode", choices=["cli", "httpws", "embed"], help="Mode to run the server in")
+        parser.add_argument("--mode", choices=["cli", "http_ws", "embed"], help="Mode to run the server in")
         parser.add_argument("--plugins", help="Comma-separated plugin paths")
         parser.add_argument("--host", help="Server host")
         parser.add_argument("--port", type=int, help="Server port")
-        return parser.parse_args()
+        known_args, unknown_args = parser.parse_known_args()
+        known_args.extra_args = unknown_args
+        return known_args
+        # return parser.parse_args()
 
     def run(self):
         if self.mode == "cli":
+            # core_app = CoreApp()
+            # BaseServer(plugin_paths or config.YAMCP_PLUGIN_PATHS)
             server = CLIServer(self.plugin_paths)
+            sys.argv = [sys.argv[0]] + self.args.extra_args
             server.run()
 
         elif self.mode in ["http", "ws", "http_ws"]:
@@ -51,7 +59,7 @@ class MainRunner:
             server.run()
 
         elif self.mode == "embed":
-            server = EmbedServer()
+            server = EmbedServer(self.plugin_paths)
             server.run()
 
         else:
