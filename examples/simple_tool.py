@@ -1,7 +1,7 @@
 # yamcp/plugins/examples/simple_tool.py
-from logics.core.decorators import tool
+from yamcp.core.decorators import tool
 
 
-@tool("say_hello")
+@tool(name="say_hello", description="Says Hello To Given Name.", version="2.0.0")
 def say_hello(name: str):
     return f"Hello, {name}!"

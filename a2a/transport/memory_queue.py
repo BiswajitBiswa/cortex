@@ -1,0 +1,6 @@
+from typing import Dict, Any
+
+
+class BaseMemoryStore:
+    async def save_context(self, agent_id: str, context: Dict[str, Any]): ...
+    async def get_context(self, agent_id: str) -> Dict[str, Any]: ...

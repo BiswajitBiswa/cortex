@@ -5,9 +5,8 @@ from yamcp.plugins.loader import register_plugins
 
 
 class EmbeddedRunner:
-    def __init__(self, plugin_paths):
-        self.app = CoreApp()
-        register_plugins(self.app, plugin_paths)
+    def __init__(self, core_app: CoreApp):
+        self.core_app = core_app
 
     async def run(self, tool: str, args: dict):
-        return await self.app.dispatch(tool, args)
+        return await self.core_app.dispatch(tool, args)

@@ -1,7 +1,9 @@
-# myplugin.py
+# TODO: fix implicit register
+
 from fastapi import APIRouter
 
-from logics.core.app import CoreApp
+from yamcp.core.app import CoreApp
+from yamcp.core.decorators import ToolBase
 
 router = APIRouter()
 
@@ -17,8 +19,8 @@ def run_tool_example(name: str) -> str:
 
 def register(core_app: CoreApp, app=None):
     # Register a tool in core_app
-    core_app.register_tool("greet", run_tool_example)
 
-    # If FastAPI app is provided, include the plugin router
+    # core_app.register_tool(name="greet", tool=run_tool_example)
+    # ToolBase().register(core_app=core_app)
     if app:
         app.include_router(router, prefix="/plugin")
